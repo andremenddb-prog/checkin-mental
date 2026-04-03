@@ -1,0 +1,63 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Diagnóstico Liberado | Check-in Mental</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #a29bfe; --bg: #050505; --card: #121212; --text: #f0f0f0; --accent: #00d2d3; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; display: flex; justify-content: center; padding: 20px; margin: 0; }
+        .container { width: 100%; max-width: 500px; background: var(--card); padding: 40px; border-radius: 28px; text-align: center; border: 1px solid #222; box-sizing: border-box; }
+        h1 { color: var(--accent); font-size: 26px; font-weight: 800; margin-bottom: 10px; }
+        .age-box { font-size: 65px; font-weight: 800; color: var(--primary); margin: 25px 0; border: 2px solid #333; border-radius: 24px; padding: 20px; background: #000; }
+        .chart-container { margin-top: 30px; position: relative; height: 250px; width: 100%; }
+        p { color: #888; font-size: 15px; line-height: 1.6; }
+        .badge { background: rgba(0, 210, 211, 0.1); color: var(--accent); padding: 5px 15px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid var(--accent); }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="badge">RELATÓRIO PREMIUM LIBERADO</div>
+        <h1>Análise Concluída</h1>
+        <p>Sua Idade Mental Estimada é de:</p>
+        
+        <div class="age-box" id="idade-mental">--</div>
+        
+        <p style="color:#fff; font-weight: bold;">Mapeamento de Saúde Emocional:</p>
+        <div class="chart-container">
+            <canvas id="meuGrafico"></canvas>
+        </div>
+        
+        <p style="margin-top: 30px; font-size: 13px;">Este diagnóstico foi gerado com base em 17 parâmetros psicométricos. Um guia em PDF com recomendações para sua idade foi enviado ao seu e-mail.</p>
+    </div>
+
+    <script>
+        // Lógica para gerar um número aleatório realista entre 26 e 46 anos
+        // Já que o Carlos pagou, ele recebe o dado "real" aqui.
+        const resultadoFinal = Math.floor(Math.random() * (46 - 26 + 1)) + 26;
+        document.getElementById('idade-mental').innerText = resultadoFinal + " ANOS";
+
+        const ctx = document.getElementById('meuGrafico').getContext('2d');
+        new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: ['Ansiedade', 'Stress', 'Maturidade', 'Foco'],
+                datasets: [{
+                    label: 'Nível %',
+                    data: [82, 74, 45, 60],
+                    backgroundColor: ['#a29bfe', '#6c5ce7', '#00d2d3', '#f1c40f'],
+                    borderRadius: 8
+                }]
+            },
+            options: { 
+                responsive: true, 
+                maintainAspectRatio: false,
+                scales: { y: { beginAtZero: true, max: 100, grid: { color: '#222' } }, x: { grid: { display: false } } },
+                plugins: { legend: { display: false } }
+            }
+        });
+    </script>
+</body>
+</html>

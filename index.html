@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="pt-br">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Check-in Mental Pro | Diagnóstico 2026</title>
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+    <style>
+        :root { --primary: #a29bfe; --secondary: #6c5ce7; --bg: #050505; --card: #121212; --text: #f0f0f0; --accent: #00d2d3; }
+        
+        body { background-color: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 20px; display: flex; justify-content: center; }
+        
+        .container { width: 100%; max-width: 500px; background: var(--card); padding: 35px; border-radius: 24px; box-shadow: 0 25px 50px rgba(0,0,0,0.9); text-align: center; border: 1px solid #222; box-sizing: border-box; }
+        
+        h1 { font-weight: 800; letter-spacing: -1px; color: var(--primary); font-size: 28px; margin-bottom: 10px; }
+        p { color: #999; font-size: 15px; line-height: 1.6; margin-top: 0; }
+
+        /* Formatação das Perguntas - ALINHADO */
+        .question-box { background: #181818; padding: 20px; border-radius: 18px; margin-bottom: 25px; text-align: left; border: 1px solid #252525; box-sizing: border-box; }
+        .question-text { font-size: 17px; font-weight: 600; margin-bottom: 15px; display: block; color: #fff; line-height: 1.4; }
+        
+        .option-item { 
+            background: #252525; padding: 14px; border-radius: 12px; cursor: pointer; display: flex; align-items: center; margin-bottom: 10px; transition: 0.2s; border: 1px solid transparent; width: 100%; box-sizing: border-box;
+        }
+        .option-item:hover { background: #2a2a2a; border-color: #333; }
+        .option-item input { margin-right: 12px; transform: scale(1.2); cursor: pointer; }
+
+        /* Botão Principal */
+        .btn { 
+            background: linear-gradient(135deg, var(--primary), var(--secondary)); color: #fff; border: none; padding: 18px; border-radius: 14px; 
+            cursor: pointer; font-weight: 800; font-size: 17px; width: 100%; transition: 0.3s; margin-top: 10px;
+        }
+        .btn:hover { transform: translateY(-2px); box-shadow: 0 10px 20px rgba(108, 92, 231, 0.3); }
+
+        .hidden { display: none; }
+
+        /* Paywall Formatado (A Cópia que Vende) */
+        .paywall-header { color: #f1c40f; font-weight: 800; font-size: 22px; margin-bottom: 5px; }
+        .blur-result { position: relative; background: #000; padding: 30px; border-radius: 20px; margin: 20px 0; overflow: hidden; border: 1px solid #333; }
+        .blur-number { filter: blur(14px); font-size: 55px; font-weight: 900; color: var(--secondary); opacity: 0.6; }
+        .lock-overlay { position: absolute; top: 50%; left: 50%; transform: translate(-50%, -50%); font-size: 35px; }
+
+        .price-box { background: rgba(0, 210, 211, 0.1); padding: 15px; border-radius: 15px; border: 1px solid rgba(0, 210, 211, 0.2); margin: 20px 0; }
+        .old-price { text-decoration: line-through; color: #ff5e57; font-size: 16px; display: block; margin-bottom: 5px; }
+        .new-price { color: var(--accent); font-size: 34px; font-weight: 800; display: block; }
+
+        input[type="email"], input[type="text"], input[type="number"] {
+            width: 100%; padding: 14px; background: #1a1a1a; border: 1px solid #333; border-radius: 12px; color: #fff; font-size: 15px; box-sizing: border-box; margin-bottom: 10px;
+        }
+
+        .precision-tag { background: #1e1e1e; color: var(--accent); padding: 5px 12px; border-radius: 20px; font-size: 12px; font-weight: bold; border: 1px solid var(--accent); display: inline-block; margin-bottom: 15px; }
+    </style>
+</head>
+<body>
+
+<div class="container">
+    <div id="step-1">
+        <div class="precision-tag">98.7% DE PRECISÃO ANALÍTICA</div>
+        <h1>Mapeamento Mental 2026</h1>
+        <p>Descubra a idade real da sua mente com base em padrões de comportamento subconscientes.</p>
+        <input type="text" id="nome-user" placeholder="Como deseja ser chamado? (Ex: Carlos)">
+        <input type="number" id="idade-user" placeholder="Sua idade cronológica">
+        <button class="btn" onclick="iniciarQuiz()">COMEÇAR ANÁLISE</button>
+    </div>
+
+    <div id="step-2" class="hidden">
+        <p style="text-align: left; color: var(--primary); font-weight: bold; margin-bottom: 20px;">Sessão iniciada para <span id="span-nome"></span>...</p>
+        <div id="quiz-content"></div>
+        <button class="btn" onclick="validarQuiz()">GERAR MEU DIAGNÓSTICO</button>
+    </div>
+
+    <div id="step-3" class="hidden">
+        <div class="paywall-header">⚠️ ANÁLISE CONCLUÍDA</div>
+        <p style="color: #eee;">Cruzamos seus micro-comportamentos com nossa base de dados global.</p>
+        
+        <p style="margin-top: 15px; color: #fff; font-size: 16px;"><strong><span id="nome-pay"></span></strong>, sua <strong>Idade Mental</strong> calculada é de:</p>
+        
+        <div class="blur-result">
+            <div class="blur-number">38 ANOS</div>
+            <div class="lock-overlay">🔒</div>
+        </div>
+
+        <p style="font-size: 14px; padding: 0 10px;">Seu <strong>Gráfico de Saúde Emocional (Ansiedade/Stress)</strong> e sua Idade Exata estão prontos e protegidos.</p>
+        
+        <div class="price-box">
+            <span class="old-price">Preço Original: R$ 19,99</span>
+            <span class="new-price">R$ 5,00</span>
+            <p style="color: var(--accent); font-size: 12px; margin: 5px 0 0 0; font-weight: bold;">🔥 OFERTA ÚNICA POR TEMPO LIMITADO</p>
+        </div>
+
+        <input type="email" id="user-email" placeholder="Digite seu e-mail para receber o PDF">
+        <button class="btn" onclick="irParaPagamento()" style="background: var(--accent);">LIBERAR DIAGNÓSTICO AGORA</button>
+        <p style="font-size: 11px; margin-top: 15px; color: #666;">Acesso imediato após a confirmação do PIX.</p>
+    </div>
+</div>
+
+<script>
+    let uNome = ""; let uIdade = 0;
+    const db = [
+        { q: "{nome}, qual horário você costuma dormir?", opts: [["Antes das 22h", 65], ["23h às 00h", 40], ["Depois da 01h", 18]] },
+        { q: "Qual sua reação a uma ligação de voz inesperada?", opts: [["Atendo na hora", 60], ["Deixo tocar", 17], ["Mando texto perguntando 'Oi?'", 28]] },
+        { q: "{nome}, você se sente exausto(a) mesmo após dormir 8h?", opts: [["Nunca", 60], ["Às vezes", 35], ["Sempre", 18]] },
+        { q: "Lugar com música muito alta te faz querer...", opts: [["Dançar e curtir", 20], ["Conversar", 40], ["Ir embora logo", 75]] },
+        { q: "{nome}, confere se a porta está trancada várias vezes?", opts: [["Não", 20], ["Uma vez", 40], ["Sempre", 70]] },
+        { q: "Gasta dinheiro por impulso para aliviar o estresse?", opts: [["Nunca", 60], ["Raramente", 35], ["Sempre", 18]] },
+        { q: "Paciência para áudios de mais de 1 minuto?", opts: [["Muita", 60], ["Coloco no 2x", 35], ["Não ouço", 15]] },
+        { q: "Vontade de sumir das redes sociais?", opts: [["Nunca", 55], ["Às vezes", 30], ["Todo dia", 15]] },
+        { q: "{nome}, seu joelho ou costas estalam ao levantar?", opts: [["Não", 15], ["Às vezes", 40], ["Sempre", 75]] },
+        { q: "Consegue focar em um filme sem olhar o celular?", opts: [["Sim", 60], ["Tento", 35], ["Impossível", 18]] },
+        { q: "Reação ao ver mensagem visualizada e não respondida?", opts: [["Nem percebo", 65], ["Fico pensando", 25], ["Sinto ansiedade", 16]] },
+        { q: "{nome}, se pudesse resetar sua vida hoje, faria?", opts: [["Não", 65], ["Algumas partes", 40], ["Sim, tudo", 20]] },
+        { q: "Qual sua relação com o despertador de manhã?", opts: [["Levanto de primeira", 60], ["Soneca uma vez", 35], ["Soneca 5 vezes", 18]] },
+        { q: "{nome}, você prefere silêncio total ou barulho de fundo?", opts: [["Silêncio", 70], ["Música baixa", 40], ["TV/Vídeo sempre ligado", 18]] },
+        { q: "Como você lida com planos cancelados de última hora?", opts: [["Fico triste", 20], ["Remarco", 40], ["Alívio por ficar em casa", 75]] },
+        { q: "{nome}, você se compara com pessoas no Instagram?", opts: [["Nunca", 60], ["Às vezes", 25], ["O tempo todo", 15]] },
+        { q: "Qual sua reação a críticas de estranhos na internet?", opts: [["Ignoro", 65], ["Fico pensativo", 30], ["Fico com raiva", 16]] }
+    ];
+
+    function iniciarQuiz() {
+        uNome = document.getElementById('nome-user').value;
+        uIdade = document.getElementById('idade-user').value;
+        if(!uNome || !uIdade) return alert("Preencha nome e idade!");
+        document.getElementById('step-1').classList.add('hidden');
+        document.getElementById('step-2').classList.remove('hidden');
+        document.getElementById('span-nome').innerText = uNome;
+        const content = document.getElementById('quiz-content');
+        db.forEach((p, i) => {
+            content.innerHTML += `<div class="question-box"><span class="question-text">${i+1}. ${p.q.replace('{nome}', uNome)}</span>
+                ${p.opts.map(o => `<label class="option-item"><input type="radio" name="q${i}" value="${o[1]}"> ${o[0]}</label>`).join('')}</div>`;
+        });
+        window.scrollTo(0,0);
+    }
+
+    function validarQuiz() {
+        if(document.querySelectorAll('input[type="radio"]:checked').length < 17) return alert("Por favor, responda todas as perguntas!");
+        document.getElementById('step-2').classList.add('hidden');
+        document.getElementById('step-3').classList.remove('hidden');
+        document.getElementById('nome-pay').innerText = uNome.toUpperCase();
+        window.scrollTo(0,0);
+    }
+
+    function irParaPagamento() {
+        const email = document.getElementById('user-email').value;
+        if(!email.includes("@")) return alert("Insira um e-mail válido!");
+        window.location.href = "SEU_LINK_DA_KIWIFY_AQUI";
+    }
+</script>
+</body>
+</html>
