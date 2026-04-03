@@ -3,141 +3,177 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0, maximum-scale=1.0, user-scalable=no">
-    <title>Resultado Oficial | Check-in Mental</title>
+    <title>Relatório de Performance Mental | Oficial</title>
     <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/html2pdf.js/0.10.1/html2pdf.bundle.min.js"></script>
-    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;700;900&display=swap" rel="stylesheet">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700;900&display=swap" rel="stylesheet">
     <style>
-        :root { --primary: #a29bfe; --bg: #050505; --card: #121212; --text: #ffffff; --accent: #00d2d3; }
+        :root { --primary: #a29bfe; --bg: #050505; --card: #111111; --text: #ffffff; --accent: #00d2d3; --gold: #f1c40f; }
         * { box-sizing: border-box; }
-        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 15px; display: flex; justify-content: center; }
+        body { background: var(--bg); color: var(--text); font-family: 'Inter', sans-serif; margin: 0; padding: 10px; display: flex; justify-content: center; }
         
-        .container { 
-            width: 100%; 
-            max-width: 400px; 
-            background: var(--card); 
-            padding: 30px; 
-            border-radius: 24px; 
-            border: 1px solid #222; 
-            text-align: center;
-        }
+        .container { width: 100%; max-width: 450px; background: var(--card); padding: 25px; border-radius: 30px; border: 1px solid #222; text-align: center; box-shadow: 0 20px 40px rgba(0,0,0,0.5); }
         
-        .badge { color: var(--accent); font-size: 10px; font-weight: 800; letter-spacing: 1px; border: 1px solid var(--accent); padding: 5px 12px; border-radius: 50px; display: inline-block; margin-bottom: 15px; }
+        .header-tag { color: var(--gold); font-size: 10px; font-weight: 800; letter-spacing: 2px; border: 1px solid var(--gold); padding: 6px 15px; border-radius: 50px; display: inline-block; margin-bottom: 20px; text-transform: uppercase; }
         
-        h1 { font-size: 22px; margin: 5px 0; font-weight: 800; color: #fff; line-height: 1.2; }
-        .user-name { color: var(--primary); text-transform: uppercase; display: block; margin-top: 8px; font-size: 24px; }
+        h1 { font-size: 16px; color: #888; font-weight: 600; margin: 0; text-transform: uppercase; letter-spacing: 1px; }
+        .user-name { color: #fff; display: block; font-size: 28px; font-weight: 900; margin: 5px 0 20px 0; border-bottom: 2px solid var(--primary); padding-bottom: 10px; }
 
-        .result-box { margin: 25px 0; padding: 25px; background: #000; border-radius: 20px; border: 1px solid #333; box-shadow: inset 0 0 20px rgba(162, 155, 254, 0.1); }
-        .result-label { font-size: 11px; color: #888; text-transform: uppercase; margin-bottom: 10px; font-weight: 700; letter-spacing: 1px; }
-        .result-number { font-size: 52px; font-weight: 900; color: var(--primary); line-height: 1; }
+        /* Blocos de Dados */
+        .grid-info { display: grid; grid-template-columns: 1fr 1fr; gap: 10px; margin-bottom: 20px; }
+        .info-card { background: #000; padding: 15px; border-radius: 15px; border: 1px solid #222; }
+        .info-label { font-size: 10px; color: #666; text-transform: uppercase; font-weight: 700; display: block; margin-bottom: 5px; }
+        .info-value { font-size: 18px; font-weight: 800; color: var(--accent); }
 
-        .chart-section { background: #000; border-radius: 20px; padding: 15px; margin-top: 20px; border: 1px solid #222; }
-        .chart-container { height: 200px; width: 100%; position: relative; }
+        .age-main { background: linear-gradient(145deg, #1a1a1a, #000); padding: 30px; border-radius: 20px; border: 1px solid #333; margin-bottom: 25px; }
+        .age-num { font-size: 64px; font-weight: 900; color: var(--primary); line-height: 1; margin: 10px 0; text-shadow: 0 0 20px rgba(162, 155, 254, 0.4); }
 
-        .btn-download { 
-            background: var(--accent); 
-            color: #000; 
-            border: none;
-            font-weight: 900; 
-            padding: 20px; 
-            border-radius: 18px; 
-            display: block; 
-            width: 100%;
-            margin-top: 30px; 
-            font-size: 16px; 
-            cursor: pointer;
-            transition: 0.3s;
-        }
-        .btn-download:active { transform: scale(0.98); }
+        /* Análise Detalhada */
+        .analysis-box { text-align: left; background: #000; padding: 20px; border-radius: 20px; border-left: 4px solid var(--primary); margin-bottom: 25px; }
+        .analysis-title { font-size: 14px; font-weight: 800; color: var(--primary); text-transform: uppercase; margin-bottom: 10px; display: flex; align-items: center; gap: 8px; }
+        .analysis-text { font-size: 14px; color: #bbb; line-height: 1.6; }
 
-        .footer-note { margin-top: 25px; font-size: 10px; color: #444; font-weight: 600; text-transform: uppercase; border-top: 1px solid #222; padding-top: 15px; }
+        .chart-section { background: #000; border-radius: 20px; padding: 15px; margin-bottom: 25px; border: 1px solid #222; }
+        .chart-container { height: 180px; width: 100%; }
+
+        /* Texto Motivacional */
+        .motivation-box { background: rgba(0, 210, 211, 0.05); padding: 20px; border-radius: 20px; border: 1px dashed var(--accent); margin-bottom: 30px; text-align: left; }
+        .motivation-title { font-size: 14px; font-weight: 800; color: var(--accent); margin-bottom: 8px; text-transform: uppercase; }
+        .motivation-text { font-size: 14px; font-style: italic; color: #ddd; line-height: 1.6; }
+
+        .btn-download { background: var(--accent); color: #000; border: none; font-weight: 900; padding: 22px; border-radius: 20px; display: block; width: 100%; font-size: 16px; cursor: pointer; text-transform: uppercase; letter-spacing: 1px; box-shadow: 0 10px 20px rgba(0, 210, 211, 0.2); }
+
+        .legal-notice { font-size: 10px; color: #444; margin-top: 25px; line-height: 1.4; padding: 0 10px; }
     </style>
 </head>
 <body>
 
-    <div class="container" id="conteudo-resultado">
-        <div class="badge">DIAGNÓSTICO CONCLUÍDO</div>
+    <div class="container" id="full-report">
+        <div class="header-tag">Relatório Confidencial de Alta Precisão</div>
         
-        <h1>MAPEAMENTO DE:</h1>
-        <span class="user-name" id="nome-exibir">ANDRÉ</span>
-        
-        <div class="result-box">
-            <div class="result-label">Idade Mental Estimada</div>
-            <div class="result-number" id="idade-mental">--</div>
-        </div>
-        
-        <div class="chart-section">
-            <p style="font-size: 12px; font-weight: 800; color: #555; margin-bottom: 10px; text-transform: uppercase;">Indicadores Emocionais</p>
-            <div class="chart-container">
-                <canvas id="meuGrafico"></canvas>
+        <h1>Analise Personalizada para:</h1>
+        <span class="user-name" id="display-name">...</span>
+
+        <div class="grid-info">
+            <div class="info-card">
+                <span class="info-label">ID da Sessão</span>
+                <span class="info-value" id="session-id">#8291</span>
+            </div>
+            <div class="info-card">
+                <span class="info-label">Nível de Rigor</span>
+                <span class="info-value">98.4%</span>
             </div>
         </div>
 
-        <button class="btn-download" onclick="gerarPDF()" id="btn-pdf">
-            📥 BAIXAR MEU DIAGNÓSTICO (PDF)
-        </button>
+        <div class="age-main">
+            <span class="info-label" style="color: #888;">Sua Idade Mental Estimada</span>
+            <div class="age-num" id="display-age">--</div>
+            <span id="perfil-tag" style="font-size: 12px; font-weight: 800; color: var(--accent);">ANALISANDO...</span>
+        </div>
 
-        <div class="footer-note">Protocolo de Análise Digital | 2026</div>
+        <div class="analysis-box">
+            <div class="analysis-title">🔍 Diagnóstico de Padrão Comportamental</div>
+            <div class="analysis-text" id="analysis-text">
+                Baseado em suas respostas, sua mente opera em um estado de processamento avançado, filtrando estímulos externos com foco em sobrevivência e eficiência emocional.
+            </div>
+        </div>
+
+        <div class="chart-section">
+            <div class="chart-container">
+                <canvas id="mentalChart"></canvas>
+            </div>
+        </div>
+
+        <div class="motivation-box">
+            <div class="motivation-title">💡 Plano de Ação & Mentalidade</div>
+            <div class="motivation-text" id="motivation-text">
+                Carregando sua mentoria personalizada...
+            </div>
+        </div>
+
+        <button class="btn-download" onclick="exportPDF()" id="btn-dl">📥 Baixar Certificado Completo (PDF)</button>
+
+        <p class="legal-notice">
+            Este documento é uma ferramenta de autoconhecimento baseada em protocolos de análise subconsciente. Não substitui orientações médicas ou psicológicas.
+        </p>
     </div>
 
     <script>
-        // 1. Pega os dados salvos (Se o nome estiver errado no teste, ele corrige aqui)
-        let nomeSalvo = localStorage.getItem('uNome') || "André";
-        if(nomeSalvo.toLowerCase() === "ander") nomeSalvo = "André"; // Correção automática se vier "Ander"
+        // 1. Captura Dados do LocalStorage (Nome Dinâmico)
+        const uName = localStorage.getItem('uNome') || "Explorador";
+        const uPoints = parseInt(localStorage.getItem('uPoints')) || 500;
         
-        const pontos = parseInt(localStorage.getItem('uPontos')) || 500;
-        
-        document.getElementById('nome-exibir').innerText = nomeSalvo;
-        
-        // 2. Cálculo da Idade
-        const idadeFinal = Math.floor(pontos / 20) + 12;
-        document.getElementById('idade-mental').innerText = idadeFinal + " ANOS";
+        document.getElementById('display-name').innerText = uName.toUpperCase();
+        document.getElementById('session-id').innerText = "#" + Math.floor(Math.random()*9000 + 1000);
 
-        // 3. Gráfico (Ajustado para não bugar)
-        const ctx = document.getElementById('meuGrafico').getContext('2d');
+        // 2. Lógica de Idade e Conteúdo Diferenciado
+        const finalAge = Math.floor(uPoints / 22) + 14;
+        document.getElementById('display-age').innerText = finalAge + " ANOS";
+
+        let perfil = ""; let analise = ""; let motivacao = "";
+
+        if(uPoints < 400) {
+            perfil = "Mente Vibrante & Adaptável";
+            analise = "Sua mente preserva uma agilidade juvenil. Você processa novas informações com rapidez, mas tende a se sobrecarregar com excesso de estímulos digitais. Seu foco é disperso mas criativo.";
+            motivacao = "A sua energia é o seu maior trunfo. Não tente silenciar sua mente, tente direcioná-la. Comece hoje a 'dieta de dopamina': menos redes sociais e mais criação real. Você tem um potencial criativo inexplorado!";
+        } else if(uPoints >= 400 && uPoints < 750) {
+            perfil = "Mente Equilibrada & Estratégica";
+            analise = "Você atingiu o equilíbrio entre a experiência e a inovação. Sua mente busca padrões lógicos e você valoriza a segurança emocional. O estresse está presente, mas é gerenciável.";
+            motivacao = "Você está na fase de maior poder de execução. O segredo para o seu próximo nível não é fazer mais, mas dizer 'não' para o que não importa. Confie na sua intuição, ela está mais calibrada do que você imagina.";
+        } else {
+            perfil = "Mente Analítica & Sábia";
+            analise = "Seu padrão mental é de alta maturidade. Você raramente age por impulso e possui um filtro crítico severo. Existe um cansaço mental acumulado devido ao excesso de responsabilidade.";
+            motivacao = "É hora de baixar a guarda um pouco. Sua busca pela perfeição está consumindo seu descanso. Permita-se não ter todas as respostas. Sua sabedoria é vasta, mas sua mente precisa de silêncio para continuar brilhando.";
+        }
+
+        document.getElementById('perfil-tag').innerText = perfil;
+        document.getElementById('analysis-text').innerText = analise;
+        document.getElementById('motivation-text').innerText = motivacao;
+
+        // 3. Gráfico
+        const ctx = document.getElementById('mentalChart').getContext('2d');
         new Chart(ctx, {
             type: 'bar',
             data: {
-                labels: ['Ansiedade', 'Stress', 'Foco'],
+                labels: ['Ansiedade', 'Stress', 'Resiliência', 'Foco'],
                 datasets: [{
                     data: [
-                        Math.min(95, 110 - (pontos/12)), 
-                        Math.min(92, 105 - (pontos/11)), 
-                        Math.max(30, (pontos/15) + 20)
+                        Math.min(95, 115 - (uPoints/10)), 
+                        Math.min(90, 110 - (uPoints/12)), 
+                        Math.min(98, (uPoints/10)),
+                        Math.max(25, (uPoints/14) + 15)
                     ],
-                    backgroundColor: ['#a29bfe', '#6c5ce7', '#00d2d3'],
-                    borderRadius: 8
+                    backgroundColor: ['#a29bfe', '#6c5ce7', '#00d2d3', '#f1c40f'],
+                    borderRadius: 5
                 }]
             },
             options: {
                 responsive: true,
                 maintainAspectRatio: false,
                 scales: {
-                    y: { beginAtZero: true, max: 100, ticks: { color: '#333', font: { size: 9 } }, grid: { color: '#1a1a1a' } },
-                    x: { ticks: { color: '#fff', font: { size: 11, weight: 'bold' } }, grid: { display: false } }
+                    y: { beginAtZero: true, max: 100, ticks: { color: '#444', font: { size: 9 } }, grid: { color: '#1a1a1a' } },
+                    x: { ticks: { color: '#fff', font: { size: 10, weight: 'bold' } }, grid: { display: false } }
                 },
                 plugins: { legend: { display: false } }
             }
         });
 
-        // 4. FUNÇÃO PARA BAIXAR O PDF DA TELA
-        function gerarPDF() {
-            const btn = document.getElementById('btn-pdf');
-            btn.innerText = "GERANDO ARQUIVO...";
-            btn.style.opacity = "0.5";
-
-            const elemento = document.getElementById('conteudo-resultado');
-            const opcoes = {
-                margin: 10,
-                filename: `Diagnostico-${nomeSalvo}.pdf`,
+        // 4. Exportação Profissional para PDF
+        function exportPDF() {
+            const btn = document.getElementById('btn-dl');
+            btn.innerText = "GERANDO CERTIFICADO...";
+            const element = document.getElementById('full-report');
+            
+            const opt = {
+                margin: 5,
+                filename: `Diagnostico-Mental-${uName}.pdf`,
                 image: { type: 'jpeg', quality: 0.98 },
                 html2canvas: { scale: 2, backgroundColor: '#050505' },
                 jsPDF: { unit: 'mm', format: 'a4', orientation: 'portrait' }
             };
 
-            html2pdf().set(opcoes).from(elemento).save().then(() => {
-                btn.innerText = "📥 BAIXAR MEU DIAGNÓSTICO (PDF)";
-                btn.style.opacity = "1";
+            html2pdf().set(opt).from(element).save().then(() => {
+                btn.innerText = "📥 Baixar Certificado Completo (PDF)";
             });
         }
     </script>
